@@ -12,6 +12,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_TAG: "25.05"
 
 jobs:
   build-and-push:
@@ -45,11 +46,10 @@ jobs:
       - name: Build and push
         id: build-and-push
         run: |
-          set -x
           # Build image
           nix build .#default
           # Push images
-          skopeo copy --retry-times=3 docker-archive:result docker://${IMAGE_NAME}:latest-\${{ matrix.arch.tag }}
+          skopeo copy --retry-times=3 docker-archive:result docker://${IMAGE_NAME}:${IMAGE_TAG}-\${{ matrix.arch.tag }}
 
   push-manifset:
     runs-on: ubuntu-24.04
@@ -58,6 +58,12 @@ jobs:
     permissions:
       packages: write
     steps:
+      - name: Install manifest-tool
+        run: |
+          git clone --branch v2.2.0 --depth=1 https://github.com/estesp/manifest-tool
+          make -C manifest-tool install
+          rm -rf manifest-tool
+
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
         with:
@@ -66,9 +72,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create and push latest manifest image
-        if: ${{ inputs.latest }}
-        uses: Noelware/docker-manifest-action@v1.0.0
-        with:
-            inputs: ${{ env.IMAGE_NAME }}:latest
-            tags: ${{ env.IMAGE_NAME }}:latest-linux-amd64,${{ env.IMAGE_NAME }}:latest-linux-arm64
-            push: true
+        run: |
+          manifest-tool push from-args \
+            --platforms linux/amd64,linux/arm64 \
+            --template ${IMAGE_NAME}:${IMAGE_TAG}-OS-ARCH \
+            --target ${IMAGE_NAME}:${IMAGE_TAG}
