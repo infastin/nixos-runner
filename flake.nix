@@ -87,6 +87,7 @@
                   buildah
                   podman
                   nodejs
+                  docker-client
                 ];
               };
 
