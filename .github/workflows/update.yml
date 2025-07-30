@@ -17,9 +17,6 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v19
 
-      - name: Use GitHub Actions cache for Nix
-        uses: DeterminateSystems/magic-nix-cache-action@v13
-
       - name: Update flake.lock
         run: |
           nix flake update
