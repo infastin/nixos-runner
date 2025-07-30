@@ -1,0 +1,28 @@
+name: Update Nix flake lock file
+
+on:
+  schedule:
+    - cron: "0 0 */2 * *"
+  workflow_dispatch:
+
+jobs:
+  update-flake:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update flake.lock
+        run: |
+          nix flake update
+
+          if git diff --quiet flake.lock; then
+            echo "No updates found in flake.lock"
+            exit 0
+          fi
+
+          git add flake.lock
+          git commit -m "update flake.lock and cache packages ($(date "+%Y-%m-%d %H:%M:%S"))"
+          git push origin HEAD:master
