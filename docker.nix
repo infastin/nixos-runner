@@ -317,6 +317,8 @@ let
           ln -s ${coreutils-full}/bin/env $out/usr/bin/env
           ln -s ${bashInteractive}/bin/bash $out/bin/sh
 
+          # act_runner workaround
+          ln -s ${coreutils-full}/bin/sleep $out/bin/sleep
         ''
         + (lib.optionalString (flake-registry-path != null) ''
           nixCacheDir="${userHome}/.cache/nix"
