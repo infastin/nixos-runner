@@ -73,7 +73,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create and push latest manifest image
+      - name: Create and push manifest image
         run: |
           manifest-tool push from-args \
             --platforms linux/amd64,linux/arm64 \
