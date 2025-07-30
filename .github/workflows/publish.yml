@@ -61,7 +61,9 @@ jobs:
       - name: Install manifest-tool
         run: |
           git clone --branch v2.2.0 --depth=1 https://github.com/estesp/manifest-tool
-          PREFIX=/usr/local make -C manifest-tool binary install
+          make -C manifest-tool binary
+          sudo mkdir -p /usr/local/bin
+          sudo cp "${PWD}/manifest-tool/manifest-tool" /usr/local/bin
           rm -rf manifest-tool
 
       - name: Log into registry ${{ env.REGISTRY }}
