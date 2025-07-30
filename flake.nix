@@ -86,6 +86,7 @@
                   manifest-tool
                   buildah
                   podman
+                  nodejs
                 ];
               };
 
