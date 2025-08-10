@@ -30,17 +30,8 @@
   # Default Packages
   nix ? pkgs.nix,
   bashInteractive ? pkgs.bashInteractive,
-  coreutils-full ? pkgs.coreutils-full,
-  gnutar ? pkgs.gnutar,
-  gzip ? pkgs.gzip,
-  gnugrep ? pkgs.gnugrep,
-  which ? pkgs.which,
-  curl ? pkgs.curl,
-  less ? pkgs.less,
-  wget ? pkgs.wget,
-  man ? pkgs.man,
+  busybox ? pkgs.busybox,
   cacert ? pkgs.cacert,
-  findutils ? pkgs.findutils,
   iana-etc ? pkgs.iana-etc,
   gitMinimal ? pkgs.gitMinimal,
   openssh ? pkgs.openssh,
@@ -51,17 +42,8 @@ let
   defaultPkgs = [
     nix
     bashInteractive
-    coreutils-full
-    gnutar
-    gzip
-    gnugrep
-    which
-    curl
-    less
-    wget
-    man
+    busybox
     cacert.out
-    findutils
     iana-etc
     gitMinimal
     openssh
@@ -315,11 +297,11 @@ let
 
           # may get replaced by pkgs.dockerTools.binSh & pkgs.dockerTools.usrBinEnv
           mkdir -p $out/bin $out/usr/bin
-          ln -s ${coreutils-full}/bin/env $out/usr/bin/env
+          ln -s ${busybox}/bin/env $out/usr/bin/env
           ln -s ${bashInteractive}/bin/bash $out/bin/sh
 
           # act_runner workaround
-          ln -s ${coreutils-full}/bin/sleep $out/bin/sleep
+          ln -s ${busybox}/bin/sleep $out/bin/sleep
         ''
         + (lib.optionalString (flake-registry-path != null) ''
           nixCacheDir="${userHome}/.cache/nix"

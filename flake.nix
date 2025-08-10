@@ -73,8 +73,6 @@
 
               fromImage = mkImage {
                 extraPkgs = with pkgs; [
-                  busybox
-                  curl
                   netrc
                   aws-credentials
                   semver
