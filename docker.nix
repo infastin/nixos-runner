@@ -1,10 +1,10 @@
 {
   # Core dependencies
-  pkgs,
-  lib,
-  dockerTools,
-  runCommand,
-  buildPackages,
+  pkgs ? import <nixpkgs> { },
+  lib ? pkgs.lib,
+  dockerTools ? pkgs.dockerTools,
+  runCommand ? pkgs.runCommand,
+  buildPackages ? pkgs.buildPackages,
   # Image configuration
   name ? "nix",
   tag ? "latest",
@@ -28,24 +28,24 @@
   },
   Cmd ? [ "${bashInteractive}/bin/bash" ],
   # Default Packages
-  nix,
-  bashInteractive,
-  coreutils-full,
-  gnutar,
-  gzip,
-  gnugrep,
-  which,
-  curl,
-  less,
-  wget,
-  man,
-  cacert,
-  findutils,
-  iana-etc,
-  gitMinimal,
-  openssh,
+  nix ? pkgs.nix,
+  bashInteractive ? pkgs.bashInteractive,
+  coreutils-full ? pkgs.coreutils-full,
+  gnutar ? pkgs.gnutar,
+  gzip ? pkgs.gzip,
+  gnugrep ? pkgs.gnugrep,
+  which ? pkgs.which,
+  curl ? pkgs.curl,
+  less ? pkgs.less,
+  wget ? pkgs.wget,
+  man ? pkgs.man,
+  cacert ? pkgs.cacert,
+  findutils ? pkgs.findutils,
+  iana-etc ? pkgs.iana-etc,
+  gitMinimal ? pkgs.gitMinimal,
+  openssh ? pkgs.openssh,
   # Other dependencies
-  shadow,
+  shadow ? pkgs.shadow,
 }:
 let
   defaultPkgs = [
@@ -302,6 +302,7 @@ let
           # see doc/manual/source/command-ref/files/profiles.md
           ln -s ${profile} $out/nix/var/nix/profiles/default-1-link
           ln -s /nix/var/nix/profiles/default-1-link $out/nix/var/nix/profiles/default
+          ln -s /nix/var/nix/profiles/default $out${userHome}/.nix-profile
 
           # see doc/manual/source/command-ref/files/channels.md
           ln -s ${channel} $out/nix/var/nix/profiles/per-user/${uname}/channels-1-link
