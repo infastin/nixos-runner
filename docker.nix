@@ -31,6 +31,7 @@
   nix ? pkgs.nix,
   bashInteractive ? pkgs.bashInteractive,
   busybox ? pkgs.busybox,
+  curl ? pkgs.curl,
   cacert ? pkgs.cacert,
   iana-etc ? pkgs.iana-etc,
   gitMinimal ? pkgs.gitMinimal,
@@ -43,6 +44,7 @@ let
     nix
     bashInteractive
     busybox
+    curl
     cacert.out
     iana-etc
     gitMinimal
