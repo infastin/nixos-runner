@@ -38,12 +38,12 @@ Format specifiers:
   %%        Literal %
 
 Examples:
-  $0 1.2.3-rc.1                # Outputs 1.2.3
-  $0 "%M.%m.%p" 1.2.3-rc.1     # Outputs 1.2.3
-  $0 "%M.%m.%p%R" 1.2-3        # Outputs 1.2.3
-  $0 "%M.%m%P%R" 1.2.3-rc.1    # Outputs 1.2.3-rc.1
-  $0 "%M.%m%p%R" 1.2-rc.1      # Outputs 1.2-rc.1
-  $0 "%M.%m%P%R" 1.2           # Outputs 1.2
+  $0 fmt 1.2.3-rc.1                # Outputs 1.2.3
+  $0 fmt "%M.%m.%p" 1.2.3-rc.1     # Outputs 1.2.3
+  $0 fmt "%M.%m.%p%R" 1.2-3        # Outputs 1.2.3
+  $0 fmt "%M.%m%P%R" 1.2.3-rc.1    # Outputs 1.2.3-rc.1
+  $0 fmt "%M.%m%p%R" 1.2-rc.1      # Outputs 1.2-rc.1
+  $0 fmt "%M.%m%P%R" 1.2           # Outputs 1.2
 EOF
 }
 
